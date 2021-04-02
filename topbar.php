@@ -7,7 +7,7 @@
 	<div class="inner">
 		
 		<div class="left">
-			Welcome to Aquagraphite Support Forum :)
+			Welcome to SVL Studios Support Forum!
 		</div>
 
 		<div class="right">

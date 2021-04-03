@@ -1,14 +1,23 @@
 <?php
+/**
+ * Meta Forum Intro
+ *
+ * @package     Supportte
+ * @author      SVL Studios
+ * @copyright   Copyright (c) 2021, SVL Studios
+ * @link        https://www.svlstudios.com
+ * @access      https://github.com/svl-studios/supportte
+ * @since       Supportte 1.0.0
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 ?>
-
-<p>Welcome to Aquagraphite Support Forum. We will do our best to assist you with any issues/bugs related to the use of our themes and plugins. Unfortunately we do not provide support for customizations or using 3rd party plugins. <a href="http://support.aquagraphite.com/support-policy/"><strong>Read our full support policy here.</strong></a></p>
-
 <div id="forums-search">
-	<form role="search" method="get" id="searchform" class="searchform" action="<?php echo site_url('/search') ?>">
+	<form role="search" method="get" id="searchform" class="searchform" action="<?php echo esc_url( site_url( '/search' ) ); ?>">
 		<input type="text" value="" name="q" class="search" placeholder="Search the forums..">
 		<input type="submit" class="searchsubmit" value="Search">
 	</form>
 </div>
-
 <br/>
 <hr/>

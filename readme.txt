@@ -1,7 +1,8 @@
 == Supportte WordPress Theme ==
 
-* Author: Syamil MJ
-* Website: http://aquagraphite.com
+* Author: Syamil MJ, kprovance
+* Website: https://www.svlstudios.com
+* Github: https://github.com/svl-studios/supportte
 
 == Description ==
 
@@ -27,6 +28,10 @@ Supportte requires these plugins in order to function properly
 * WP Mail SMTP
 
 == Changelog ==
+
+= 1.2.0: April 2, 2021 =
+* Updated code base for compatibility with WP 5.7 and PHP <= 8.0
+* Applied WordPress Coding STandards for additional security (sanitizing, escpaing, ninces, etc.)
 
 = 1.1.0: June 12, 2013 = 
 

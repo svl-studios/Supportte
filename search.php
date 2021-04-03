@@ -2,9 +2,12 @@
 /**
  * The template for displaying Search Results pages.
  *
- * @package WordPress
- * @subpackage Twenty_Ten
- * @since Twenty Ten 1.0
+ * @package     Supportte
+ * @author      SVL Studios
+ * @copyright   Copyright (c) 2021, SVL Studios
+ * @link        https://www.svlstudios.com
+ * @access      https://github.com/svl-studios/supportte
+ * @since       Supportte 1.0.0
  */
 
 /**
@@ -12,81 +15,72 @@
  */
 get_header();
 
-$http_get = ('GET' == $_SERVER['REQUEST_METHOD']); 
-$search = $http_get ? $_GET['q'] : '';
-$args = array(
-	's' => $search,
+$http_get   = ( 'GET' === $_SERVER['REQUEST_METHOD'] ?? '' );
+$the_search = $http_get ? sanitize_text_field( wp_unslash( $_GET['q'] ?? '' ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+$args       = array(
+	's' => $the_search,
 );
-?>
 
-	<div id="container">
-		<div id="content" role="main">
-			
-			<?php if($search) { ?>
-			
+?>
+<div id="container">
+	<div id="content" role="main">
+		<?php if ( $the_search ) { ?>
 			<div id="forums-search">
-				<form role="search" method="get" id="searchform" class="searchform" action="<?php echo site_url('/search') ?>">
-					<input type="text" value="<?php echo $search ?>" name="q" class="search" placeholder="Search the forums..">
+				<form role="search" method="get" id="searchform" class="searchform" action="<?php echo esc_url( site_url( '/search' ) ); ?>">
+					<input type="text" value="<?php echo esc_attr( $the_search ); ?>" name="q" class="search" placeholder="<?php esc_html__( 'Search the forums...', 'supportte' ); ?>">
 					<input type="submit" class="searchsubmit" value="Search">
 				</form>
 			</div>
-
 			<br/>
 			<hr/>
+			<?php
+			if ( have_posts() ) {
+				while ( have_posts() ) {
+					the_post();
+					?>
+					<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+						<div class="entry-content">
+							<div id="bbpress-forums">
+								<?php if ( bbp_has_topics( $args ) ) { ?>
+									<?php bbp_get_template_part( 'loop', 'topics' ); ?>
+									<?php bbp_get_template_part( 'pagination', 'topics' ); ?>
+								<?php } else { ?>
+									<?php esc_html__( 'Sorry, no results found for', 'supportte' ); ?> <strong><?php echo esc_html( $the_search ); ?></strong>.
+								<?php } ?>
+							</div>
+						</div><!-- .entry-content -->
+					</div><!-- #post-## -->
+					<?php
+				}
+			} // end of the loop.
+		} else {
+			if ( have_posts() ) {
+				?>
+				<h1 class="page-title">
+					<?php // translators: %s = search query. ?>
+					<?php printf( esc_html__( 'Search Results for: %s', 'supportte' ), '<span>' . get_search_query() . '</span>' ); ?>
+				</h1>
+				<?php
 
-			<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-
-				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-					<div class="entry-content">
-
-						<div id="bbpress-forums">
-
-							<?php if ( bbp_has_topics( $args ) ) : ?>
-
-								<?php bbp_get_template_part( 'loop',       'topics'    ); ?>
-
-								<?php bbp_get_template_part( 'pagination', 'topics'    ); ?>
-
-							<?php else : ?>
-
-									Sorry, no results found for <strong><?php echo $search ?></strong>.
-
-							<?php endif; ?>
-
-						</div>
-						
-					</div><!-- .entry-content -->
-
-				</div><!-- #post-## -->
-
-			<?php endwhile; endif; // end of the loop. ?>
-			
+				/**
+				 * Run the loop for the search to output the results.
+				 * If you want to overload this in a child theme then include a file
+				 * called loop-search.php and that will be used instead.
+				 */
+				get_template_part( 'loop', 'search' );
+				?>
 			<?php } else { ?>
-
-			<?php if ( have_posts() ) : ?>
-							<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'twentyten' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
-							<?php
-							/* Run the loop for the search to output the results.
-							 * If you want to overload this in a child theme then include a file
-							 * called loop-search.php and that will be used instead.
-							 */
-							 get_template_part( 'loop', 'search' );
-							?>
-			<?php else : ?>
-							<div id="post-0" class="post no-results not-found">
-								<h2 class="entry-title"><?php _e( 'Nothing Found', 'twentyten' ); ?></h2>
-								<div class="entry-content">
-									<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'twentyten' ); ?></p>
-									<?php get_search_form(); ?>
-								</div><!-- .entry-content -->
-							</div><!-- #post-0 -->
-			<?php endif; ?>
-			
+				<div id="post-0" class="post no-results not-found">
+					<h2 class="entry-title"><?php esc_html_e( 'Nothing Found', 'supportte' ); ?></h2>
+					<div class="entry-content">
+						<p><?php esc_html_e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'supportte' ); ?></p>
+						<?php get_search_form(); ?>
+					</div><!-- .entry-content -->
+				</div><!-- #post-0 -->
 			<?php } ?>
-
-			</div><!-- #content -->
-		</div><!-- #container -->
+		<?php } ?>
+	</div><!-- #content -->
+</div><!-- #container -->
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

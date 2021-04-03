@@ -130,7 +130,7 @@ class AQ_Forums_Widget extends WP_Widget {
 	 *
 	 * @since bbPress (r2653)
 	 */
-	public function update( array $new_instance, array $old_instance ): array {
+	public function update( $new_instance, $old_instance ): array {
 		$instance                 = $old_instance;
 		$instance['title']        = wp_strip_all_tags( $new_instance['title'] );
 		$instance['parent_forum'] = $new_instance['parent_forum'];

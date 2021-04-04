@@ -19,6 +19,53 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 640;
 }
 
+/**
+ * Hide/show content based on user login status.
+ *
+ * @param array  $atts Attributes.
+ * @param string $content Content.
+ *
+ * @return mixed
+ */
+function svl_status_shortcode( $atts = array(), $content = null ) {
+	$arr = array(
+		'status' => 'logged-in',
+	);
+
+	// phpcs:ignore WordPress.PHP.DontExtract
+	extract( shortcode_atts( $arr, $atts ) );
+
+	if ( 'logged-out' === $status ) {
+		if ( ! is_user_logged_in() ) {
+			return do_shortcode( $content );
+		}
+	} else {
+		if ( is_user_logged_in() ) {
+			return do_shortcode( $content );
+		}
+	}
+}
+
+add_shortcode( 'svl_user_status', 'svl_status_shortcode' );
+add_filter( 'widget_text', 'shortcode_unautop' );
+add_filter( 'widget_text', 'do_shortcode' );
+
+/**
+ * Display login notice for unregistered users.
+ */
+function svl_logon_notice() {
+	if ( ! is_user_logged_in() ) {
+		?>
+		<div class='bbp-template-notice' style='background-color:#f4f4f4;border-color:#dedede;' ><br>
+			<h3 style='color:#2b2b2b'> You must be logged in to view support forums and topics .</h3 >
+			<p style='color:#666666'>Need to Register?  No problem!  Check out <a href='http://support.svlstudios.com/forums/topic/forum-registration/' style='color:#000'>this post</a> for more information!</p>
+		</div>
+		<?php
+	}
+}
+
+add_action( 'bbp_template_after_forums_index', 'svl_logon_notice' );
+
 /** Tell WordPress to run twentyten_setup() when the 'after_setup_theme' hook is run. */
 add_action( 'after_setup_theme', 'twentyten_setup' );
 
@@ -504,6 +551,11 @@ if ( ! function_exists( 'twentyten_posted_in' ) ) {
 }
 
 add_filter( 'comment_form_defaults', 'tinymce_comment_enable' );
+/**
+ * @param $args
+ *
+ * @return mixed
+ */
 function tinymce_comment_enable( $args ) {
 	ob_start();
 	wp_editor( '', 'comment', array( 'tinymce' ) );

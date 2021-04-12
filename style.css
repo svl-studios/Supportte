@@ -1504,7 +1504,7 @@ code {
     margin-bottom:15px;
 }
 
-body.page-id-17787 .one-column #content,
+body.page-id-22 .one-column #content,
 body.page-id-29785 .one-column #content,
 body.page-id-29834 .one-column #content,
 body.page-id-29844 .one-column #content,
@@ -1513,10 +1513,10 @@ body.page-id-29870 .one-column #content{
     width:auto;
 }
 
-body.page-id-17787 #pg-17787-1 > .panel-row-style,
-body.page-id-17787 #pg-17787-2 > .panel-row-style,
+body.page-id-22 #pg-22-1 > .panel-row-style,
+body.page-id-22 #pg-22-2 > .panel-row-style,
 .sf-product-list,
-body.page-id-17787 #pg-29785-2 > .panel-row-style{
+body.page-id-22 #pg-29785-2 > .panel-row-style{
     margin: 0 -15px;
 }
 
@@ -1581,7 +1581,7 @@ body.page-id-17787 #pg-29785-2 > .panel-row-style{
     border: 1px solid #eee;
     padding: 4px;
 }
-body.page-id-17787 .panel-row-style .ss-services{
+body.page-id-22 .panel-row-style .ss-services{
     padding-bottom:20px;
 }
 .ss-services .widget_sow-image {

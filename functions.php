@@ -550,7 +550,7 @@ if ( ! function_exists( 'twentyten_posted_in' ) ) {
 	}
 }
 
-add_filter( 'the_content', 'svl_remove_autop', 0 );
+add_filter( 'the_content', 'svl_remove_autop', 11 );
 
 /**
  * Remove p tags from content.

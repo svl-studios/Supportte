@@ -560,8 +560,9 @@ add_filter( 'the_content', 'svl_remove_autop', 0 );
  * @return string
  */
 function svl_remove_autop( string $content ): string {
-	remove_filter('the_content', 'wpautop');
-
+	remove_filter( 'the_content', 'wpautop' );
+	remove_filter( 'the_excerpt', 'wpautop' );
+	var_dump($content);
 	return $content;
 }
 

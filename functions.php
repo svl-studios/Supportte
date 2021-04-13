@@ -560,7 +560,7 @@ add_filter( 'the_content', 'svl_remove_autop', 11 );
  * @return string
  */
 function svl_remove_autop( string $content ): string {
-	if (is_page() ) {
+	if ( is_page() ) {
 		remove_filter( 'the_content', 'wpautop' );
 		remove_filter( 'the_excerpt', 'wpautop' );
 

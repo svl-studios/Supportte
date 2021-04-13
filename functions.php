@@ -550,6 +550,21 @@ if ( ! function_exists( 'twentyten_posted_in' ) ) {
 	}
 }
 
+add_filter( 'the_content', 'svl_remove_autop', 0 );
+
+/**
+ * Remove p tags from content.
+ *
+ * @param string $content Content.
+ *
+ * @return string
+ */
+function svl_remove_autop( string $content ): string {
+	remove_filter('the_content', 'wpautop');
+
+	return $content;
+}
+
 add_filter( 'comment_form_defaults', 'tinymce_comment_enable' );
 /**
  * @param $args

@@ -333,6 +333,7 @@ sub {
 }
 #content input[type="text"],
 input[type="text"],
+input[type="email"],
 #content input[type="password"],
 textarea {
 	background: #FFF;
@@ -344,6 +345,7 @@ textarea {
 	padding: 7px 12px;
 }
 	#content input[type="text"]:focus,
+    #content input[type="email"]:focus,
 	#content input[type="password"]:focus {
 		color: #333;
 		outline: 0;

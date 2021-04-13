@@ -560,10 +560,14 @@ add_filter( 'the_content', 'svl_remove_autop', 11 );
  * @return string
  */
 function svl_remove_autop( string $content ): string {
-	remove_filter( 'the_content', 'wpautop' );
-	remove_filter( 'the_excerpt', 'wpautop' );
+	if (is_page() ) {
+		remove_filter( 'the_content', 'wpautop' );
+		remove_filter( 'the_excerpt', 'wpautop' );
 
-	return str_replace( array( '<p>', '</p>' ), '', $content );
+		$content = str_replace( array( '<p>', '</p>' ), '', $content );
+	}
+
+	return $content;
 }
 
 add_filter( 'comment_form_defaults', 'tinymce_comment_enable' );

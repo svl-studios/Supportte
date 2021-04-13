@@ -1659,6 +1659,7 @@ img{
     cursor: pointer;
     margin-left: -30px;
 }
+
 #menu-item-17820 > a::after {
     color: #ff0000;
     content: "NEW";
@@ -1667,6 +1668,7 @@ img{
     position: absolute;
     top: -12px;
 }
+
 #menu-item-17820 > a {
     position: relative;
 }
@@ -1742,6 +1744,7 @@ ul>li.forum_category {
     font-size:14px;
     font-weight:bold;
 }
+
 #bbps_support_forum_options,
 #bbps_support_forum_move{
     width:31% !important;
@@ -1752,19 +1755,23 @@ ul>li.forum_category {
     margin:1%;
     border-radius:4px;
 }
+
 #bbps_support_forum_options .bbps-support-forums-message{
     width:100%;
 }
+
 #bbps_support_forum_options form label,
 #bbps_support_forum_move form label{
     color:#2b2b2b;
 }
+
 #bbps_support_forum_options form select,
 #bbps_support_forum_move form select{
     display:block;
     width:80%;
     margin:10px auto 10px auto;
 }
+
 #bbps_support_forum_options form input[type="submit"],
 #bbps_support_forum_move form input[type="submit"]{
     display:block;
@@ -1777,15 +1784,18 @@ ul>li.forum_category {
     padding:5px;
     background-color:#F0F8FF !important;
 }
+
 #bbps_support_forum_options form,
 #bbps_support_forum_move form{
     display:block;
     width:100%;
     margin:10px auto 10px auto;
 }
+
 #main{
     min-height:600px;
 }
+
 .admin-custom-bubble {
     background-color: #a6c3d7;
     border-radius: 6px 6px 6px 6px;
@@ -1795,6 +1805,7 @@ ul>li.forum_category {
     margin-left: 10px;
     padding: 0 5px;
 }
+
 .staff-custom-bubble {
     background-color: #94cfc9;
     border-radius: 6px 6px 6px 6px;
@@ -1805,3 +1816,11 @@ ul>li.forum_category {
     padding: 0 5px;
 }
 .reply.user-id-1 .reply-author-displayname a{color:red;}
+
+#bbps-post-count{
+    font-size:11px;
+}
+
+.bbp-body a.bbp-forum-title{
+    font-weight:bold;
+}

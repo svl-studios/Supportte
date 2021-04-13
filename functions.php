@@ -562,8 +562,8 @@ add_filter( 'the_content', 'svl_remove_autop', 0 );
 function svl_remove_autop( string $content ): string {
 	remove_filter( 'the_content', 'wpautop' );
 	remove_filter( 'the_excerpt', 'wpautop' );
-	var_dump($content);
-	return $content;
+
+	return str_replace( array( '<p>', '</p>' ), '', $content );
 }
 
 add_filter( 'comment_form_defaults', 'tinymce_comment_enable' );

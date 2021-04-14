@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Archive Topic Content Part
  *
@@ -7,28 +6,37 @@
  * @subpackage Theme
  */
 
+defined( 'ABSPATH' ) || exit;
+
+$args = array();
+
+if ( ! is_user_logged_in() ) {
+	$args = array(
+		'show_stickies' => true,
+		'meta_key'      => '_bbp_super_sticky_topics', // phpcs:ignore
+	);
+}
+
 ?>
-
 <div id="bbpress-forums">
+	<?php
 
-	<?php bbp_breadcrumb(); ?>
+	bbp_breadcrumb();
 
-	<?php if ( bbp_is_topic_tag() ) bbp_topic_tag_description(); ?>
+	if ( bbp_is_topic_tag() ) {
+		bbp_topic_tag_description();
+	}
 
-	<?php do_action( 'bbp_template_before_topics_index' ); ?>
+	do_action( 'bbp_template_before_topics_index' );
 
-	<?php if ( bbp_has_topics() ) : ?>
+	if ( bbp_has_topics( $args ) ) {
+		bbp_get_template_part( 'loop', 'topics' );
+		bbp_get_template_part( 'pagination', 'topics' );
+	} else {
+		bbp_get_template_part( 'feedback', 'no-topics' );
+	}
 
-		<?php bbp_get_template_part( 'loop',       'topics'    ); ?>
+	do_action( 'bbp_template_after_topics_index' );
 
-		<?php bbp_get_template_part( 'pagination', 'topics'    ); ?>
-
-	<?php else : ?>
-
-		<?php bbp_get_template_part( 'feedback',   'no-topics' ); ?>
-
-	<?php endif; ?>
-
-	<?php do_action( 'bbp_template_after_topics_index' ); ?>
-
+	?>
 </div>

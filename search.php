@@ -15,11 +15,16 @@
  */
 get_header();
 
-$http_get   = ( 'GET' === $_SERVER['REQUEST_METHOD'] ?? '' );
-$the_search = $http_get ? sanitize_text_field( wp_unslash( $_GET['q'] ?? '' ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
-$args       = array(
-	's' => $the_search,
-);
+$http_get = ( 'GET' === $_SERVER['REQUEST_METHOD'] ?? '' );
+
+if ( isset( $_GET['_wp_nonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wp_nonce'] ) ), 'supportte_search' ) ) {
+	$the_search = $http_get ? sanitize_text_field( wp_unslash( $_GET['q'] ?? '' ) ) : '';
+	$args       = array(
+		's' => $the_search,
+	);
+} else {
+	wp_nonce_ays( 'expired' );
+}
 
 ?>
 <div id="container">

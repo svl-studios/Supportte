@@ -7,51 +7,46 @@
  * @subpackage Theme
  */
 
-// Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
 ?>
-
 <div id="bbpress-forums" class="bbpress-wrapper">
+	<?php
 
-	<?php bbp_breadcrumb(); ?>
+	bbp_breadcrumb();
+	bbp_forum_subscription_link();
 
-	<?php bbp_forum_subscription_link(); ?>
+	do_action( 'bbp_template_before_single_forum' );
 
-	<?php do_action( 'bbp_template_before_single_forum' ); ?>
+	if ( post_password_required() ) {
+		bbp_get_template_part( 'form', 'protected' );
+	} else {
+		if ( is_user_logged_in() ) {
+			bbp_single_forum_description();
+			$args = array();
+		} else {
+			$args = array(
+				'show_stickies' => true,
+				'meta_key'      => '_bbp_super_sticky_topics',
+			);
+		}
 
-	<?php if ( post_password_required() ) : ?>
+		if ( bbp_has_forums() ) {
+			bbp_get_template_part( 'loop', 'forums' );
+		}
 
-		<?php bbp_get_template_part( 'form', 'protected' ); ?>
+		if ( ! bbp_is_forum_category() && bbp_has_topics( $args ) ) {
+			bbp_get_template_part( 'loop', 'topics' );
+			bbp_get_template_part( 'pagination', 'topics' );
+			bbp_get_template_part( 'form', 'topic' );
 
-	<?php else : ?>
+		} elseif ( ! bbp_is_forum_category() ) {
+			bbp_get_template_part( 'feedback', 'no-topics' );
+			bbp_get_template_part( 'form', 'topic' );
+		}
+	}
 
-	    <?php if ( is_user_logged_in() ) { ?>
-			<?php bbp_single_forum_description(); ?>
-		<?php } ?>
+	do_action( 'bbp_template_after_single_forum' );
 
-		<?php if ( bbp_has_forums() ) : ?>
-
-			<?php bbp_get_template_part( 'loop', 'forums' ); ?>
-
-		<?php endif; ?>
-
-		<?php if ( ! bbp_is_forum_category() && bbp_has_topics() /* && is_user_logged_in() */ ) : ?>
-
-			<?php bbp_get_template_part( 'loop',       'topics'    ); ?>
-
-			<?php bbp_get_template_part( 'pagination', 'topics'    ); ?>
-
-			<?php bbp_get_template_part( 'form',       'topic'     ); ?>
-
-		<?php elseif ( ! bbp_is_forum_category() ) : ?>
-
-			<?php bbp_get_template_part( 'feedback',   'no-topics' ); ?>
-
-			<?php bbp_get_template_part( 'form',       'topic'     ); ?>
-		<?php endif; ?>
-	<?php endif; ?>
-
-	<?php do_action( 'bbp_template_after_single_forum' ); ?>
-
+	?>
 </div>

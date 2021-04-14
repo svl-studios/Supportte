@@ -12,17 +12,23 @@
 
 get_header();
 
-$http_get   = ( 'GET' === $_SERVER['REQUEST_METHOD'] ?? '' );
-$the_search = $http_get ? sanitize_text_field( wp_unslash( $_GET['q'] ?? '' ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
-$args       = array(
-	's' => $the_search,
-);
+$http_get = ( 'GET' === $_SERVER['REQUEST_METHOD'] ?? '' );
+
+if ( isset( $_GET['_wp_nonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wp_nonce'] ) ), 'supportte_search' ) ) {
+	$the_search = $http_get ? sanitize_text_field( wp_unslash( $_GET['q'] ?? '' ) ) : '';
+	$args       = array(
+		's' => $the_search,
+	);
+} else {
+	wp_nonce_ays( 'expired' );
+}
 
 ?>
 <div id="container">
 	<div id="content" role="main">
 		<div id="forums-search">
 			<form role="search" method="get" id="searchform" class="searchform" action="<?php echo esc_url( site_url( '/search' ) ); ?>">
+				<?php wp_nonce_field( 'supportte_search' ); ?>
 				<input type="text" value="<?php echo esc_attr( $the_search ); ?>" name="q" class="search" placeholder="<?php esc_attr__( 'Search the forums...', 'supportte' ); ?>">
 				<input type="submit" class="searchsubmit" value="<?php esc_attr__( 'Search', 'supportte' ); ?>">
 			</form>

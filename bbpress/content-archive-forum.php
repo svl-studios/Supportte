@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Archive Forum Content Part
  *
@@ -7,29 +6,24 @@
  * @subpackage Theme
  */
 
-// Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
 ?>
-
 <div id="bbpress-forums" class="bbpress-wrapper">
+	<?php
+	bbp_breadcrumb();
 
-	<?php bbp_breadcrumb(); ?>
+	bbp_forum_subscription_link();
 
-	<?php bbp_forum_subscription_link(); ?>
+	do_action( 'bbp_template_before_forums_index' );
 
-	<?php do_action( 'bbp_template_before_forums_index' ); ?>
+	if ( bbp_has_forums() ) {
+		bbp_get_template_part( 'loop', 'forums' );
+	} else {
+		bbp_get_template_part( 'feedback', 'no-forums' );
+	}
 
-	<?php if ( bbp_has_forums() ) : ?>
+	do_action( 'bbp_template_after_forums_index' );
 
-		<?php bbp_get_template_part( 'loop',     'forums'    ); ?>
-
-	<?php else : ?>
-
-		<?php bbp_get_template_part( 'feedback', 'no-forums' ); ?>
-
-	<?php endif; ?>
-
-	<?php do_action( 'bbp_template_after_forums_index' ); ?>
-
+	?>
 </div>

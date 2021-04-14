@@ -25,7 +25,7 @@ if ( ! isset( $content_width ) ) {
  * @param array  $atts Attributes.
  * @param string $content Content.
  *
- * @return mixed
+ * @return string
  */
 function svl_status_shortcode( $atts = array(), $content = null ) {
 	$arr = array(
@@ -44,6 +44,8 @@ function svl_status_shortcode( $atts = array(), $content = null ) {
 			return do_shortcode( $content );
 		}
 	}
+
+	return '';
 }
 
 add_shortcode( 'svl_user_status', 'svl_status_shortcode' );
@@ -66,9 +68,6 @@ function svl_logon_notice() {
 
 add_action( 'bbp_template_after_forums_index', 'svl_logon_notice' );
 add_action( 'bbp_template_after_topics_index', 'svl_logon_notice' );
-//add_action( 'bbp_template_after_single_topic', 'svl_logon_notice' );
-//add_action( 'bbp_template_after_single_forum', 'svl_logon_notice' );
-//add_action( 'bbp_template_after_lead_topic', 'svl_logon_notice' );
 
 /** Tell WordPress to run twentyten_setup() when the 'after_setup_theme' hook is run. */
 add_action( 'after_setup_theme', 'twentyten_setup' );
@@ -320,7 +319,7 @@ add_filter( 'use_default_gallery_style', '__return_false' );
  * @deprecated Deprecated in Twenty Ten 1.2 for WordPress 3.1
  * @since      Twenty Ten 1.0
  */
-function twentyten_remove_gallery_css( $css ) {
+function twentyten_remove_gallery_css( $css ): string {
 	return preg_replace( "#<style type='text/css'>(.*?)</style>#s", '', $css );
 }
 
@@ -510,15 +509,18 @@ if ( ! function_exists( 'twentyten_posted_on' ) ) {
 	 * @since Twenty Ten 1.0
 	 */
 	function twentyten_posted_on() {
-		printf( __( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep">by</span> %3$s', 'supportte' ),
+		printf(
+			esc_html__( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep">by</span> %3$s', 'supportte' ),
 			'meta-prep meta-prep-author',
-			sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
-				get_permalink(),
+			sprintf(
+				'<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
+				esc_url( get_permalink() ),
 				esc_attr( get_the_time() ),
 				get_the_date()
 			),
-			sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s">%3$s</a></span>',
-				get_author_posts_url( get_the_author_meta( 'ID' ) ),
+			sprintf(
+				'<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s">%3$s</a></span>',
+				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
 				esc_attr( sprintf( __( 'View all posts by %s', 'supportte' ), get_the_author() ) ),
 				get_the_author()
 			)
@@ -537,11 +539,11 @@ if ( ! function_exists( 'twentyten_posted_in' ) ) {
 		// Retrieves tag list of current post, separated by commas.
 		$tag_list = get_the_tag_list( '', ', ' );
 		if ( $tag_list ) {
-			$posted_in = __( 'This entry was posted in %1$s and tagged %2$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'supportte' );
+			$posted_in = esc_html__( 'This entry was posted in %1$s and tagged %2$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'supportte' );
 		} elseif ( is_object_in_taxonomy( get_post_type(), 'category' ) ) {
-			$posted_in = __( 'This entry was posted in %1$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'supportte' );
+			$posted_in = esc_html__( 'This entry was posted in %1$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'supportte' );
 		} else {
-			$posted_in = __( 'Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'supportte' );
+			$posted_in = esc_html__( 'Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'supportte' );
 		}
 		// Prints the string, replacing the placeholders.
 		printf(
@@ -575,12 +577,15 @@ function svl_remove_autop( string $content ): string {
 }
 
 add_filter( 'comment_form_defaults', 'tinymce_comment_enable' );
+
 /**
- * @param $args
+ * Comments enable.
  *
- * @return mixed
+ * @param array $args Args.
+ *
+ * @return array
  */
-function tinymce_comment_enable( $args ) {
+function tinymce_comment_enable( array $args ): array {
 	ob_start();
 	wp_editor( '', 'comment', array( 'tinymce' ) );
 	$args['comment_field'] = ob_get_clean();

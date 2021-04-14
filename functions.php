@@ -65,6 +65,10 @@ function svl_logon_notice() {
 }
 
 add_action( 'bbp_template_after_forums_index', 'svl_logon_notice' );
+add_action( 'bbp_template_after_topics_index', 'svl_logon_notice' );
+//add_action( 'bbp_template_after_single_topic', 'svl_logon_notice' );
+//add_action( 'bbp_template_after_single_forum', 'svl_logon_notice' );
+//add_action( 'bbp_template_after_lead_topic', 'svl_logon_notice' );
 
 /** Tell WordPress to run twentyten_setup() when the 'after_setup_theme' hook is run. */
 add_action( 'after_setup_theme', 'twentyten_setup' );

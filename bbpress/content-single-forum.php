@@ -36,9 +36,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php endif; ?>
 
-		<?php if ( ! bbp_is_forum_category() && bbp_has_topics() && is_user_logged_in() ) : ?>
-
-			<?php bbp_get_template_part( 'pagination', 'topics'    ); ?>
+		<?php if ( ! bbp_is_forum_category() && bbp_has_topics() /* && is_user_logged_in() */ ) : ?>
 
 			<?php bbp_get_template_part( 'loop',       'topics'    ); ?>
 

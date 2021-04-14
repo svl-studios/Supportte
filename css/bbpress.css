@@ -399,7 +399,9 @@ td.bbp-topic-counts {
 }
 
 .bbp-topic-action #favorite-toggle,
-.bbp-topic-action #subscription-toggle {
+.bbp-topic-action #subscription-toggle,
+#bbpress-forums #subscription-toggle,
+#bbpress-forums #favorite-toggle {
     font-weight: normal;
     font-size: 12px;
 }
@@ -979,6 +981,11 @@ body.my-account #bbp-author-topics-started {
     margin-bottom: 0;
 }
 
+#bbpress-forums #subscription-toggle,
+#bbpress-forums #favorite-toggle {
+    float: right;
+}
+
 /* =BuddyPress Group Forums
 -------------------------------------------------------------- */
 
@@ -1103,4 +1110,32 @@ body.my-account #bbp-author-topics-started {
 
 .bbp-author-name {
     margin-left: 5px;
+}
+
+#bbpress-forums #subscription-toggle a {
+    text-decoration: none;
+    padding: 0 3px 1px;
+    color: #7c7;
+    border: 1px solid #aca;
+    background-color: #dfd;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+#bbpress-forums #subscription-toggle a:hover {
+    color: #5a5;
+    border-color: #7c7;
+    background-color: #beb;
+}
+
+#bbpress-forums #subscription-toggle span.is-subscribed a {
+    color: #faa;
+    border: 1px solid #faa;
+    background-color: #fee;
+}
+
+#bbpress-forums #subscription-toggle span.is-subscribed a:hover {
+    color: #c88;
+    border-color: #c88;
+    background-color: #fdd;
 }

@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 	<li class="bbp-topic-title">
 		<?php do_action( 'bbp_theme_before_topic_title' ); ?>
 		<div class="overflow">
-			<a class="bbp-topic-permalink" href="<?php bbp_topic_permalink(); ?>" title="<?php bbp_topic_title(); ?>"><?php bbp_topic_title(); ?></a>
+			<a class="bbp-topic-permalink" href="<?php bbp_topic_permalink(); ?>" title="<?php echo esc_attr( wp_strip_all_tags( bbp_get_topic_title() ) ); ?>"><?php bbp_topic_title(); ?></a>
 			<?php do_action( 'bbp_theme_before_topic_started_by' ); ?>
 			<?php // translators: %1$s = author. ?>
 			<span class="bbp-topic-started-by"><?php printf( esc_html__( ' by %1$s', 'bbpress' ), wp_kses_post( bbp_get_topic_author( array( 'type' => 'name' ) ) ) ); ?></span>
@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 				do_action( 'bbp_theme_before_topic_started_in' );
 				?>
 				<?php // translators: %1$s = URL. ?>
-				<span class="bbp-topic-started-in"><?php printf( esc_html__( 'in <a href="%1$s">%2$s</a>', 'bbpress' ), esc_url( bbp_get_forum_permalink( bbp_get_topic_forum_id() ) ), wp_kses_post( bbp_get_forum_title( bbp_get_topic_forum_id() ) ) ); ?></span>
+				<span class="bbp-topic-started-in"><?php printf( wp_kses_post( __( 'in <a href="%1$s">%2$s</a>', 'bbpress' ) ), esc_url( bbp_get_forum_permalink( bbp_get_topic_forum_id() ) ), wp_kses_post( bbp_get_forum_title( bbp_get_topic_forum_id() ) ) ); ?></span>
 				<?php
 				do_action( 'bbp_theme_after_topic_started_in' );
 			}

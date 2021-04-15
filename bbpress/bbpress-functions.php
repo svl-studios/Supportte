@@ -688,14 +688,17 @@ add_filter( 'bbp_topic_pagination', 'aq_topic_pagination_query' );
  */
 function aq_topic_pagination_query( $bbp_topic_pagination = array() ): array {
 	$http_get = ( 'GET' === sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ?? '' ) ) );
-	if ( isset( $_GET['_wp_nonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wp_nonce'] ) ), 'supportte_search' ) ) {
-		$search = $http_get ? ( sanitize_text_field( wp_unslash( $_GET['q'] ?? '' ) ) ) : '';
+
+	if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wpnonce'] ) ), 'supportte_search' ) ) {
+		$search = $http_get ? ( sanitize_text_field( wp_unslash( $_GET['s'] ?? '' ) ) ) : '';
 
 		if ( $search ) {
 			$bbp_topic_pagination['add_args'] = array( 'q' => $search );
 		}
 	} else {
-		wp_nonce_ays( 'expired' );
+		if ( isset( $_GET['_wpnonce'] ) ) {
+			wp_nonce_ays( 'expired' );
+		}
 	}
 
 	return $bbp_topic_pagination;

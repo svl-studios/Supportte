@@ -14,8 +14,9 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 <div id="forums-search">
-	<form role="search" method="get" id="searchform" class="searchform" action="<?php echo esc_url( site_url( '/search' ) ); ?>">
-		<input type="text" value="" name="q" class="search" placeholder="Search the forums..">
+	<form role="search" method="get" id="searchform" class="searchform" action="<?php echo esc_url( site_url( '/' ) ); ?>">
+		<?php wp_nonce_field( 'supportte_search', '_wpnonce', false ); ?>
+		<input type="text" value="" name="s" class="search" placeholder="Search the forums..">
 		<input type="submit" class="searchsubmit" value="Search">
 	</form>
 </div>

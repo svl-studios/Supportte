@@ -17,8 +17,8 @@ get_header();
 
 $http_get = ( 'GET' === $_SERVER['REQUEST_METHOD'] ?? '' );
 
-if ( isset( $_GET['_wp_nonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wp_nonce'] ) ), 'supportte_search' ) ) {
-	$the_search = $http_get ? sanitize_text_field( wp_unslash( $_GET['q'] ?? '' ) ) : '';
+if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wpnonce'] ) ), 'supportte_search' ) ) {
+	$the_search = $http_get ? sanitize_text_field( wp_unslash( $_GET['s'] ?? '' ) ) : '';
 	$args       = array(
 		's' => $the_search,
 	);
@@ -31,16 +31,20 @@ if ( isset( $_GET['_wp_nonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $
 	<div id="content" role="main">
 		<?php if ( $the_search ) { ?>
 			<div id="forums-search">
-				<form role="search" method="get" id="searchform" class="searchform" action="<?php echo esc_url( site_url( '/search' ) ); ?>">
-					<input type="text" value="<?php echo esc_attr( $the_search ); ?>" name="q" class="search" placeholder="<?php esc_html__( 'Search the forums...', 'supportte' ); ?>">
+				<form role="search" method="get" id="searchform" class="searchform" action="<?php echo esc_url( site_url( '/' ) ); ?>">
+					<?php wp_nonce_field( 'supportte_search', '_wpnonce', false ); ?>
+					<input type="text" value="<?php echo esc_attr( $the_search ); ?>" name="s" class="search" placeholder="<?php esc_html__( 'Search the forums...', 'supportte' ); ?>">
 					<input type="submit" class="searchsubmit" value="Search">
 				</form>
 			</div>
 			<br/>
 			<hr/>
 			<?php
+			global $wp_query;
+
 			if ( have_posts() ) {
 				while ( have_posts() ) {
+					var_dump('loop');
 					the_post();
 					?>
 					<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

@@ -18,7 +18,14 @@ get_header(); ?>
 				<h1 class="entry-title"><?php esc_html_e( 'Not Found', 'supportte' ); ?></h1>
 				<div class="entry-content">
 					<p><?php esc_html_e( 'Apologies, but the page you requested could not be found. Perhaps searching will help.', 'supportte' ); ?></p>
-					<?php get_search_form(); ?>
+					<?php // get_search_form(); ?>
+					<form role='search' method='get' id='searchform' class='searchform' action="<?php echo esc_url( site_url( '/' ) ); ?>">
+						<?php wp_nonce_field( 'supportte_search', '_wpnonce', false ); ?>
+						<input type="text" value="<?php echo esc_attr( $the_search ?? '' ); ?>" name="s" class="search"
+							   placeholder="<?php esc_html__( 'Search the forums...', 'supportte' ); ?>">
+						<input type="submit" class="searchsubmit" value="Search">
+					</form>
+				</div>
 				</div><!-- .entry-content -->
 			</div><!-- #post-0 -->
 		</div><!-- #content -->

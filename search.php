@@ -23,7 +23,8 @@ if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_
 		's' => $the_search,
 	);
 } else {
-	wp_nonce_ays( 'expired' );
+	echo 'This search link has expired.<br><br>Please click <a href="' . esc_url( site_url() ) . '?_wpnonce=' . esc_attr( wp_create_nonce( 'supportte_search' ) ) . '&s=' . esc_attr( sanitize_text_field( wp_unslash( $_GET['s'] ) ) ) . '">here</a> to try again.';
+	exit;
 }
 
 ?>
@@ -43,24 +44,21 @@ if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_
 			global $wp_query;
 
 			if ( have_posts() ) {
-				while ( have_posts() ) {
-					var_dump('loop');
-					the_post();
-					?>
-					<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-						<div class="entry-content">
-							<div id="bbpress-forums">
-								<?php if ( bbp_has_topics( $args ) ) { ?>
-									<?php bbp_get_template_part( 'loop', 'topics' ); ?>
-									<?php bbp_get_template_part( 'pagination', 'topics' ); ?>
-								<?php } else { ?>
-									<?php esc_html__( 'Sorry, no results found for', 'supportte' ); ?> <strong><?php echo esc_html( $the_search ); ?></strong>.
-								<?php } ?>
-							</div>
-						</div><!-- .entry-content -->
-					</div><!-- #post-## -->
-					<?php
-				}
+				the_post();
+				?>
+				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<div class="entry-content">
+						<div id="bbpress-forums">
+							<?php if ( bbp_has_topics( $args ) ) { ?>
+								<?php bbp_get_template_part( 'loop', 'topics' ); ?>
+								<?php bbp_get_template_part( 'pagination', 'topics' ); ?>
+							<?php } else { ?>
+								<?php esc_html__( 'Sorry, no results found for', 'supportte' ); ?> <strong><?php echo esc_html( $the_search ); ?></strong>.
+							<?php } ?>
+						</div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+				<?php
 			} // end of the loop.
 		} else {
 			if ( have_posts() ) {
